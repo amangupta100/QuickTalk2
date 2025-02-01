@@ -8,7 +8,7 @@ export const AuthContProvider = ({children}) =>{
     const [userInfo,setuserInfo] = useState(null)
 
     const fetchUserInfo =async () =>{
-        const req = await axios.get("http://localhost:5000/api/auth/userInfo",{
+        const req = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/userInfo`,{
             withCredentials:true
         })
         const {success,user} = req.data

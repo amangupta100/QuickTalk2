@@ -19,7 +19,7 @@ export const LeftSideBar = () =>{
    const {setuserInfo,userInfo} = useContext(AuthContext)
 
   const handleLogout =async () =>{
-const req = await axios.get("http://localhost:5000/api/auth/logout",{
+const req = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`,{
     withCredentials:true
 })
 const {success,message} = req.data

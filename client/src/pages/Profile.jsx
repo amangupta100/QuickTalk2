@@ -22,7 +22,7 @@ export const Profile = () =>{
     const userId = userInfo.id
     formData.append("userId",userId)
     setLoading(true)
-    const req = await fetch("http://localhost:5000/api/userDetails/update",{
+    const req = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/userDetails/update`,{
         method:"POST",body:formData
     })
     const res = await req.json()

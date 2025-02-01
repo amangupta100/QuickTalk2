@@ -10,7 +10,7 @@ export const ConverasationProvider = ({children}) =>{
 
     const getAllUsers =async () =>{
         try{
-            const req = await axios.get("http://localhost:5000/api/users",{
+            const req = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`,{
                 withCredentials:true
             })
             if(!req.data.success) ErrorToast(req.data.message)

@@ -8,7 +8,7 @@ export const MessageContxt = createContext()
 export const MessageContProv = ({children}) =>{
     const sendMessageFunc =async (sendMessage,receiverid) =>{
 
-     const response = await axios.post(`http://localhost:5000/api/message/send/${receiverid}`, {
+     const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/message/send/${receiverid}`, {
         message: sendMessage,
       },{
         withCredentials:true,
@@ -26,7 +26,7 @@ export const MessageContProv = ({children}) =>{
 
     const getMessages = async (userToChatID) =>{
       setMessLoading(true)
-        const response = await axios.get(`http://localhost:5000/api/message/getMessages/${userToChatID}`,{
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/message/getMessages/${userToChatID}`,{
             withCredentials:true
         })
         const {success,message} = response.data 
