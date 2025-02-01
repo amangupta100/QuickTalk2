@@ -22,7 +22,6 @@ export const LeftSideBar = () =>{
 const req = await axios.get("http://localhost:5000/api/auth/logout",{
     withCredentials:true
 })
-console.log(req)
 const {success,message} = req.data
 if(success){
     SuccessToast(message)
@@ -30,7 +29,6 @@ if(success){
 }
 else ErrorToast(message)
   }
-  console.log(userInfo)
 
    const [user,setUser] = useState("")
     return(
@@ -55,7 +53,7 @@ else ErrorToast(message)
          }
         <HiOutlineDotsVertical className='text-3xl p-2 w-10 h-12 group cursor-pointer text-white'/>
         </div>
-         <div className="absolute hidden py-4 px-5 top-[40px]  z-10 tb:-right-8 lm:-right-5 right-2 rounded-xl group-hover:block w-48 min-h-fit bg-white ">
+         <div className="absolute hidden py-4 px-5 top-[40px] mt-2 lm:mt-4 lm:-right-0  z-10 tb:-right-8  right-2 rounded-xl group-hover:block w-48 min-h-fit bg-white ">
         <NavLink to="/profile" className="text-lg">Edit Profile</NavLink>
         <hr className='border-[1.5px] border-zinc-200 mt-1' />
         <button onClick={handleLogout} className='my-2 text-lg'>Logout</button>

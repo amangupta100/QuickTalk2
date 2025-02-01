@@ -27,7 +27,6 @@ export const SocketContProvider = ({children}) =>{
         }
     }
     },[userInfo])
-    console.log(socketSt)
 
     const value = {onlineUsers,socketSt}
     return <SocketContxt.Provider value={value}>{children}</SocketContxt.Provider>

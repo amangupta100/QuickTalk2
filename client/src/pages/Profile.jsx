@@ -64,9 +64,11 @@ export const Profile = () =>{
     <div className="">
         <form onSubmit={handleSubmitDet}>
             <h1 className='text-lg text-white'>Username : <span className='font-extrabold'>{userInfo.username}</span></h1>
-          {
-            loading ?  <Oval visible={true} height="30" width="30" color="#FFFFFF"/> :   <button disabled={loading} className='w-full text-white bg-blue-500 rounded-lg py-3 hover:transition-all duration-300 ease-in-out cursor-pointer my-3 hover:bg-blue-400'>Upload Photo</button>
-          }
+              <button disabled={loading} className={`${loading?"cursor-not-allowed":null} w-full text-white flex items-center justify-center bg-blue-500 rounded-lg py-3 hover:transition-all duration-300 ease-in-out cursor-pointer my-3 hover:bg-blue-400`}>
+                {
+                    loading ? <Oval visible={true} height="30" width="30" color="#FFFFFF"/> : <h1>Upload Photo</h1>
+                }
+              </button>
         </form>
     </div>
 

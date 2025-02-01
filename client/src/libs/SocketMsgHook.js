@@ -16,5 +16,4 @@ export const useListenMessage = () =>{
         })
         return () => socketSt?.off("newMessage");
     },[socketSt,message,setMessage])
-    console.log(message)
 }
