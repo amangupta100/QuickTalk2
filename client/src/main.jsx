@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import {App} from './App.jsx'
-import {BrowserRouter} from 'react-router-dom'
+import {HashRouter} from 'react-router-dom'
 import {Toaster} from 'react-hot-toast'
 import { AuthContProvider } from './context/AuthContext.jsx'
 import { MessageContProv } from './context/MessageCont.jsx'
@@ -9,7 +9,7 @@ import { ConverasationProvider } from './context/Conversation.jsx'
 import { SocketContProvider } from './context/SocketContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
+    <HashRouter>
     <AuthContProvider>
     <SocketContProvider>
     <MessageContProv>
@@ -21,5 +21,5 @@ createRoot(document.getElementById('root')).render(
 
     </SocketContProvider>
     </AuthContProvider>
-     </BrowserRouter>
+     </HashRouter>
 )
