@@ -1,12 +1,38 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import img1 from '../assets/avatar_icon.png'
 import { AuthContext } from '../context/AuthContext'
+import { IoMdArrowBack } from "react-icons/io";
+import { NavLink } from 'react-router-dom'
+import { FaUserCircle } from "react-icons/fa";
+import { ErrorToast, SuccessToast } from '../Toast/AllToast';
+import {Oval} from 'react-loader-spinner'
 
 export const Profile = () =>{
     const [image,setImage] = useState(false)
     const [file,setFile] = useState(null)
+    const {userInfo,setuserInfo} = useContext(AuthContext)
+    const [loading,setLoading] = useState(false)
 
     const ImageInputRef = useRef()
+
+    const handleSubmitDet =async (e) =>{
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append("image",file)
+    const userId = userInfo.id
+    formData.append("userId",userId)
+    setLoading(true)
+    const req = await fetch("http://localhost:5000/api/userDetails/update",{
+        method:"POST",body:formData
+    })
+    const res = await req.json()
+    setLoading(false)
+    const {success,message} =res
+    if(success){
+        SuccessToast(message)
+        setuserInfo({...userInfo,profileImg:res.profUrl})
+    }else ErrorToast(message)
+    }
 
     const handleImagCh = (e) =>{
     const file = e.target.files[0]
@@ -19,8 +45,11 @@ export const Profile = () =>{
         <div className="w-screen flex items-center justify-center h-screen bg-[url(./assets/background.png)] ">
             
        <div className="min-w-fit py-6 px-8 flex-col rounded-lg min-h-fit backdrop-blur-md bg-zinc-200/30">
-        
-       <h1 className="text-white text-2xl font-semibold">Profile Details</h1>   
+       <NavLink to="/" className="bg-white w-24 py-3 flex items-center justify-center rounded-lg">
+        <IoMdArrowBack className='text-xl mr-1'/>
+        Back
+       </NavLink>
+       <h1 className="text-white text-2xl mt-3 font-semibold">Profile Details</h1>   
 
       <div className="flex items-center w-full justify-baseline">
 
@@ -33,17 +62,20 @@ export const Profile = () =>{
      </div>
 
     <div className="">
-        <form>
-            <input type="text" placeholder='Your name' className='focus:outline-none py-3 w-full bg-white rounded-lg mt-5 px-4' name="" id="" />
-            <textarea name="" placeholder='Write Profile Bio' className='focus:outline-none w-full py-2 px-4 bg-white rounded-lg mt-4 max-h-40  ' id=""></textarea>
-            <button className='w-full text-white bg-blue-500 rounded-lg py-3 hover:transition-all duration-300 ease-in-out cursor-pointer my-3 hover:bg-blue-400'>Save Details</button>
+        <form onSubmit={handleSubmitDet}>
+            <h1 className='text-lg text-white'>Username : <span className='font-extrabold'>{userInfo.username}</span></h1>
+          {
+            loading ?  <Oval visible={true} height="30" width="30" color="#FFFFFF"/> :   <button disabled={loading} className='w-full text-white bg-blue-500 rounded-lg py-3 hover:transition-all duration-300 ease-in-out cursor-pointer my-3 hover:bg-blue-400'>Upload Photo</button>
+          }
         </form>
     </div>
 
     </div>
 
-    <img src={`${image?image:img1}`} className='w-32 h-32 ml-10 rounded-full' alt="" />
-
+    {
+        userInfo?.profileImg? <img src={`${userInfo.profileImg}`} className='w-32 h-32 ml-10 rounded-full' alt="" /> :
+        <FaUserCircle className='text-white text-9xl ml-10'/>
+    }
       </div>
 
        </div>   

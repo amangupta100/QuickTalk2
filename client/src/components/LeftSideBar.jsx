@@ -8,17 +8,33 @@ import './LeftSidebar.css'
 import { SocketContxt } from '../context/SocketContext';
 import { LuDot } from "react-icons/lu";
 import { AuthContext } from '../context/AuthContext';
+import { ErrorToast, SuccessToast } from '../Toast/AllToast';
+import axios from 'axios';
+import {NavLink} from 'react-router-dom'
 
 
 export const LeftSideBar = () =>{
    const {allConv,setselecConv,selectedConv} = useContext(ConversationContxt)
    const {onlineUsers} = useContext(SocketContxt)
-   const {userInfo} = useContext(AuthContext)
+   const {setuserInfo,userInfo} = useContext(AuthContext)
+
+  const handleLogout =async () =>{
+const req = await axios.get("http://localhost:5000/api/auth/logout",{
+    withCredentials:true
+})
+console.log(req)
+const {success,message} = req.data
+if(success){
+    SuccessToast(message)
+    setuserInfo(null)
+}
+else ErrorToast(message)
+  }
+  console.log(userInfo)
 
    const [user,setUser] = useState("")
-   console.log(onlineUsers,userInfo)
     return(
-        <div className={`${selectedConv?._id?"lD:hidden w-[40%]":"lD:w-full w-[40%] h-full"} overflow-y-scroll bg-[rgb(0,16,48)] `}>
+        <div className={`${selectedConv?._id?"lD:hidden w-[40%]":"lD:w-full w-[40%] h-full"} overflow-y-auto bg-[rgb(0,16,48)] `}>
 
          <div className="px-5 w-full">
 
@@ -30,11 +46,19 @@ export const LeftSideBar = () =>{
          </div>
          
          <div className="relative group">
-         <HiOutlineDotsVertical className='text-3xl p-2 w-10 h-12 group cursor-pointer text-white'/>
+        <div className="flex items-center">
+         {
+            userInfo?.profileImg ? <img src={userInfo.profileImg} className='w-16 h-16 rounded-full' alt="" />: 
+            <div className='w-14 h-14 flex items-center justify-center bg-white rounded-full'>
+            <h1 className='text-black text-3xl'> {userInfo.name[0]} </h1>
+            </div>
+         }
+        <HiOutlineDotsVertical className='text-3xl p-2 w-10 h-12 group cursor-pointer text-white'/>
+        </div>
          <div className="absolute hidden py-4 px-5 top-[40px]  z-10 tb:-right-8 lm:-right-5 right-2 rounded-xl group-hover:block w-48 min-h-fit bg-white ">
-        <h1 className='text-lg'>Edit Profile</h1>
+        <NavLink to="/profile" className="text-lg">Edit Profile</NavLink>
         <hr className='border-[1.5px] border-zinc-200 mt-1' />
-        <button className='my-2 text-lg'>Logout</button>
+        <button onClick={handleLogout} className='my-2 text-lg'>Logout</button>
         </div>
          </div>
 
@@ -55,7 +79,7 @@ export const LeftSideBar = () =>{
           <div className="relative">
           <LuDot className={`${onlineUsers.includes(elem._id)?"absolute text-lime-500 -right-6 text-7xl -top-8":"hidden"}`}/>
           {
-            elem.profileImg? <img src={elem.profileImg} className='w-12 rounded-full' alt="" /> : <FaUserCircle className='text-white text-5xl'/>
+            elem.profileImg? <img src={elem.profileImg} className='w-16 h-16 rounded-full' alt="" /> : <FaUserCircle className='text-white text-5xl'/>
            }
           </div>
          <div className="flex-col flex ml-4 text-white">

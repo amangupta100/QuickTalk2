@@ -25,18 +25,22 @@ export const MessageContProv = ({children}) =>{
     }
 
     const getMessages = async (userToChatID) =>{
+      setMessLoading(true)
         const response = await axios.get(`http://localhost:5000/api/message/getMessages/${userToChatID}`,{
             withCredentials:true
         })
         const {success,message} = response.data 
+        setMessLoading(false)
         if(success){
             setMessage(response.data.messages)
         }
         else ErrorToast(message)
     }
     const [message,setMessage] = useState([])
+    const [loading,setLoading] = useState(false)
+    const [getMessLoading,setMessLoading] = useState(false)
 
-    const value={sendMessageFunc,message,setMessage,getMessages}
+    const value={sendMessageFunc,message,setMessage,getMessages,loading,getMessLoading}
     return(
         <MessageContxt.Provider value={value}>
         {children}

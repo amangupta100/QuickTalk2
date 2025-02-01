@@ -15,7 +15,7 @@ else{
     const salt =await bcrypt.genSalt(10)
     const hashedPass = await bcrypt.hash(password,salt)
     const newUser = await userModel.create({name,email,password:hashedPass,username})
-    res.cookie("token",CreateToken(newUser.username,newUser.email,newUser._id),{
+    res.cookie("token",CreateToken(newUser.username,newUser.email,newUser._id,newUser.name),{
         maxAge,secure:true,sameSite:"strict"
     })
     res.json({success:true,message:"User created successfully",user:{
@@ -37,7 +37,7 @@ const login =async (req,res) =>{
         if(user){
            const isValid = await bcrypt.compare(password,user.password)
            if(isValid){
-            res.cookie("token",CreateToken(user.username,user.email,user._id),{
+            res.cookie("token",CreateToken(user.username,user.email,user._id,user.name),{
                 maxAge,secure:true,sameSite:"strict"
             })
             res.json({success:true,message:"Login Successfully",user:{
@@ -60,9 +60,19 @@ const user = await userModel.findOne({username})
 if(!user) res.json({success:false,message:"Invalid token , login again"})
 else{
     res.json({success:true,message:"User find",user:{
-        username:user.username,email:user.email,id:user._id,profileImg:user.profileImg
+        username:user.username,email:user.email,id:user._id,profileImg:user.profileImg,name:user.name
     }})
 }
 }
 
-module.exports = {SignUp,login,userInfoCont}
+const logout = (req,res) =>{
+    try {
+		res.cookie("token", "", { maxAge: 0 });
+		res.status(200).json({ message: "Logged out successfully",success:true });
+	} catch (error) {
+		console.log("Error in logout controller", error.message);
+		res.status(500).json({ error: "Internal Server Error",success:false });
+	}
+}
+
+module.exports = {SignUp,login,userInfoCont,logout}

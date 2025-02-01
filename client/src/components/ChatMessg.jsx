@@ -1,4 +1,3 @@
-import gallery from '../assets/gallery_icon.png';
 import { IoIosSend } from "react-icons/io";
 import { useContext, useEffect, useState } from 'react';
 import { ConversationContxt } from '../context/Conversation';
@@ -11,30 +10,29 @@ import back from '../assets/arrow_icon.png'
 import { useListenMessage } from '../libs/SocketMsgHook';
 import { AuthContext } from '../context/AuthContext';
 import { extractTime } from '../utils/extractTime'
+import { LuDot } from "react-icons/lu";
+import { SocketContxt } from '../context/SocketContext';
+import { MessageSkeleton } from '../skeleton/MessageSkeleton';
 
 export const ChatMessg = () => {
   const [sendMessage, setSendMessage] = useState("");
-  const [loading, setLoading] = useState(false)
 
+  const {loading,getMessLoading} = useContext(MessageContxt)
   const { selectedConv,setselecConv } = useContext(ConversationContxt)
   const { sendMessageFunc } = useContext(MessageContxt)
+  const {onlineUsers} = useContext(SocketContxt)
+  const { message,getMessages,setMessage } = useContext(MessageContxt)
+  const { userInfo } = useContext(AuthContext)
 
   const handleSendMessage = async () => {
     if (sendMessage.length < 3) {
       ErrorToast("Message length should be greater than 3 characters")
     } else {
-      setLoading(true);
       sendMessageFunc(sendMessage, selectedConv._id);
-      setLoading(false);
       setSendMessage("");
     }
   }
   useListenMessage()
-
-    const { message,getMessages,setMessage } = useContext(MessageContxt)
-    const { userInfo } = useContext(AuthContext)
-
-  
       if (selectedConv && selectedConv?.name) {
           useEffect(() => {
             getMessages(selectedConv?._id);
@@ -66,17 +64,23 @@ export const ChatMessg = () => {
             {/* Top section */}
             <div className="p-2 flex items-center w-full border-l-0 border-r-0 border-[1.6px] border-zinc-300">
             <img src={back} onClick={()=>setselecConv({})} className="mr-3 hidden lD:block cursor-pointer w-6" alt="" />
-              {
-                selectedConv.profileImg ? <img src={selectedConv.profileImg} className='w-12 rounded-full' alt="" /> : <FaUserCircle className='text-5xl' />
+             <div className="relative">
+              <LuDot className={`${onlineUsers.includes(selectedConv?._id)?"absolute text-lime-500 -right-6 text-7xl -top-8":"hidden"}`}/>
+              
+             {
+                selectedConv.profileImg ? <img src={selectedConv.profileImg} className='w-14 h-14 rounded-full' alt="" /> : <FaUserCircle className='text-5xl' />
               }
+             </div>
               <h1 className='text-xl font-semibold ml-3'> {selectedConv.username} </h1>
             </div>
 
             {/* Messages */}
             <div className="mt-2 flex flex-col flex-1 px-4 max-h-[68%] vlm:max-h-[77%] tb:max-h-[76%] lm: w-full overflow-y-auto">
-            {
+           {
+            getMessLoading? <MessageSkeleton/> :
+            
                 message.length>0 ?
-                message.map((elem,idx) => {
+               message.map((elem,idx) => {
                     return (
                         <div key={idx} className={`${userInfo.id == elem.senderId ? "justify-end ml-auto rounded-ee-2xl rounded-ss-2xl rounded-es-2xl" : " rounded-se-2xl rounded-e-2xl rounded-bl-2xl"} bg-zinc-200 mb-4 relative max-w-fit py-3 px-8  min-h-16`}>
                         {/* <h1 className={`${elem}`}> {date(elem)} </h1> */}
@@ -86,13 +90,13 @@ export const ChatMessg = () => {
                     )
                 })
              : <h1 className='text-2xl'>No conversation exist</h1>
-            }
+            
+           }
         </div>
             
             {/*chat box*/}
             <div className="border-t-2 border-zinc-300 flex w-full">
               <div className="flex items-center w-full px-4 gap-1 mr-[10px] lm:mr-0">
-                <img src={gallery} className="w-6" alt="" />
                 {
                   loading ? <Oval visible={true} height="30" width="30" color="#000000" /> : <IoIosSend onClick={handleSendMessage} className='text-4xl cursor-pointer px-1 min-w-9 ml-1 text-white bg-blue-500 rounded-full' />
                 }

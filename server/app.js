@@ -6,6 +6,7 @@ const authRouter = require("./routes/authRoutes")
 const messRouter = require("./routes/messageRoutes")
 const userRouter = require("./routes/userRoutes")
 const {app,server} = require("./socket")
+const userDet = require("./routes/profileDetRoutes")
 
 
 //config
@@ -23,6 +24,7 @@ app.use(express.json())
 app.use("/api/auth",authRouter)
 app.use("/api/message",messRouter)
 app.use("/api/users",userRouter)
+app.use("/api/userDetails",userDet)
 
 //routes
 app.get("/",(req,res)=>{

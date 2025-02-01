@@ -1,8 +1,6 @@
 const conversationModel = require("../models/conversationModel")
 const messageModel = require("../models/messageModel")
 const { getReceiverSocketId, io } = require("../socket")
-// const {ReceiverSocketID,setupSocket} = require("../libs/socketManager")
-// const {io} = setupSocket()
 
 const sendMessage = async (req, res) => {
     try {
