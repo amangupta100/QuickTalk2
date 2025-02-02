@@ -8,11 +8,9 @@ const userRouter = require("./routes/userRoutes")
 const {app,server} = require("./socket")
 const userDet = require("./routes/profileDetRoutes")
 
-
 //config
 require("dotenv").config()
 mongConnection()
-
 
 //whitelisted domains
 const whiteList = ["http://localhost:5173","https://quick-talk2-client.vercel.app"]
@@ -32,9 +30,11 @@ const corsOptions = {
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
+app.options("*",cors(corsOptions))
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
+  console.log(req.headers.origin)
   if (whiteList.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin);
   }
@@ -44,7 +44,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   next()
 })
-app.use(cors(corsOptions))
 //cors setup ends here
 
 //middleware
