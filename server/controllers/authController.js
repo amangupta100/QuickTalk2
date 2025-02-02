@@ -16,7 +16,7 @@ else{
     const hashedPass = await bcrypt.hash(password,salt)
     const newUser = await userModel.create({name,email,password:hashedPass,username})
     res.cookie("token",CreateToken(newUser.username,newUser.email,newUser._id,newUser.name),{
-        maxAge,secure:true,sameSite:"strict"
+        maxAge
     })
     res.json({success:true,message:"User created successfully",user:{
         username:newUser.username,email:newUser.email,id:newUser._id,profileImg:newUser.profileImg
@@ -38,7 +38,7 @@ const login =async (req,res) =>{
            const isValid = await bcrypt.compare(password,user.password)
            if(isValid){
             res.cookie("token",CreateToken(user.username,user.email,user._id,user.name),{
-                maxAge,secure:true,sameSite:"strict"
+                maxAge
             })
             res.json({success:true,message:"Login Successfully",user:{
                 username:user.username,email:user.email,id:user._id,profileImg:user.profileImg
