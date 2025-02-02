@@ -20,14 +20,12 @@ app.use(cors({
     credentials:true
 }))
 app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (process.env.frontend_Url) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
-    next()
+     res.set({
+    'Access-Control-Allow-Origin': '*', // Allow all origins
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+  });
+  next();
 })
 app.use(cookieParser())
 app.use(express.json())
