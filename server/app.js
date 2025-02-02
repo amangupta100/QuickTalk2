@@ -16,7 +16,7 @@ mongConnection()
 //middlewares
 app.use(cors({
     origin: process.env.frontend_Url,
-    methods:['GET','POST','PUT','PATCH','DELETE'],
+    methods:"GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials:true,
     allowedHeaders: "Content-Type,Authorization",
 }))
