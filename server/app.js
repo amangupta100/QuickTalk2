@@ -15,13 +15,13 @@ mongConnection()
 
 //middlewares
 app.use(cors({
-    origin:process.env.frontend_Url,
+    origin: '*',
     methods:['GET','POST','PUT','PATCH','DELETE'],
     credentials:true
 }))
 app.use((req, res, next) => {
      res.set({
-    'Access-Control-Allow-Origin': '*', // Allow all origins
+    'Access-Control-Allow-Origin': process.env.frontend_Url, // Allow specific origin
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization'
   });
