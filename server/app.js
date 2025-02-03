@@ -30,7 +30,6 @@ const corsOptions = {
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  console.log(req.headers.origin)
   if (whiteList.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin);
   }
