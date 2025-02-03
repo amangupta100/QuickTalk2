@@ -10,12 +10,9 @@ const userDet = require("./routes/profileDetRoutes")
 
 //config
 require("dotenv").config()
-mongConnection()
 
 //whitelisted domains
 const whiteList = ["http://localhost:5173","https://quick-talk2-client.vercel.app"]
-app.use(cookieParser())
-app.use(express.json())
 
 //cors setup starts here
 const corsOptions = {
@@ -30,7 +27,6 @@ const corsOptions = {
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
-app.options("*",cors(corsOptions))
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -45,6 +41,11 @@ app.use((req, res, next) => {
   next()
 })
 //cors setup ends here
+
+app.use(cors(corsOptions))
+app.use(cookieParser())
+app.use(express.json())
+mongConnection()
 
 //middleware
 app.use("/api/auth",authRouter)
