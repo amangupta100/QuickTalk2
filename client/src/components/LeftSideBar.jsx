@@ -47,7 +47,7 @@ else ErrorToast(message)
         <div className="flex items-center">
          {
             userInfo?.profileImg ? <img src={userInfo.profileImg} className='w-12 h-12 rounded-full' alt="" />: 
-            <div className='w-14 h-14 flex items-center justify-center bg-white rounded-full'>
+            <div className='w-12 h-12 flex items-center justify-center bg-white rounded-full'>
             <h1 className='text-black text-3xl'> {userInfo.name[0]} </h1>
             </div>
          }
