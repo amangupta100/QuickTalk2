@@ -95,12 +95,12 @@ export const ChatMessg = () => {
         </div>
             
             {/*chat box*/}
-            <div className="border-t-2 border-zinc-300 flex w-full">
-              <div className="flex items-center w-full px-4 gap-1 mr-[10px] lm:mr-0">
-                {
+            <div className="border-t-2  z-50 h-16 absolute bottom-0 border-zinc-300 flex w-full">
+              <div className="flex  items-center w-full h-full gap-4">
+              {
                   loading ? <Oval visible={true} height="30" width="30" color="#000000" /> : <IoIosSend onClick={handleSendMessage} className='text-4xl cursor-pointer px-1 min-w-9 ml-1 text-white bg-blue-500 rounded-full' />
                 }
-              <input value={sendMessage} onChange={(e) => setSendMessage(e.target.value)} type="text" placeholder='Send a message' className='focus:outline-none w-[50%] lm:w-[100%] py-2 text-lg px-2' />
+              <input value={sendMessage} onChange={(e) => setSendMessage(e.target.value)} type="text" placeholder='Send a message' className='focus:outline-none w-[90%] lm:w-[100%] py-2 text-lg px-2' />
               </div>
             </div>
            

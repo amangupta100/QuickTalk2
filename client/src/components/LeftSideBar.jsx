@@ -46,7 +46,7 @@ else ErrorToast(message)
          <div className="relative group">
         <div className="flex items-center">
          {
-            userInfo?.profileImg ? <img src={userInfo.profileImg} className='w-16 h-16 rounded-full' alt="" />: 
+            userInfo?.profileImg ? <img src={userInfo.profileImg} className='w-12 h-12 rounded-full' alt="" />: 
             <div className='w-14 h-14 flex items-center justify-center bg-white rounded-full'>
             <h1 className='text-black text-3xl'> {userInfo.name[0]} </h1>
             </div>
@@ -77,7 +77,7 @@ else ErrorToast(message)
           <div className="relative">
           <LuDot className={`${onlineUsers.includes(elem._id)?"absolute text-lime-500 -right-6 text-7xl -top-8":"hidden"}`}/>
           {
-            elem.profileImg? <img src={elem.profileImg} className='w-16 h-16 rounded-full' alt="" /> : <FaUserCircle className='text-white text-5xl'/>
+            elem.profileImg? <img src={elem.profileImg} className='w-12 h-12 rounded-full' alt="" /> : <FaUserCircle className='text-white text-5xl'/>
            }
           </div>
          <div className="flex-col flex ml-4 text-white">
