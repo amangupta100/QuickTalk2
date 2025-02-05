@@ -76,7 +76,9 @@ export const SignUp = () => {
           </button>
         </form>
 
-        <h1 className="text-start text-white mx-4 mb-5">Already have an account? <span><NavLink className="text-blue-500 font-semibold" to="/login">Login user</NavLink></span></h1>
+        <h1 className="text-start text-white mx-4">Already have an account? <span><NavLink className="text-blue-500 font-semibold" to="/login">Login user</NavLink></span></h1>
+        <h1 className="mt-1 mx-4 text-white mb-4 text-sm">Note-
+        Getting response is slow due to current database server is far away from my current location . Don't worry! under 20second you will get response , once the connection is connected to db server It's fast.</h1>
       </div>
     </div>
   )
