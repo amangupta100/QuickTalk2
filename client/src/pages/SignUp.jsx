@@ -47,11 +47,6 @@ export const SignUp = () => {
 
   return (
     <div className="w-screen flex items-center justify-center h-screen bg-[url(./assets/background.png)] ">
-
-    <div className="flex items-center mr-44">
-      <img src={icon} className="w-32" alt="" />
-      <h1 className="text-7xl text-white mt-5 ">QuickTalk</h1>
-    </div>
    
       <div className="w-[490px] rounded-lg min-h-fit backdrop-blur-md bg-zinc-200/30 ">
         <h1 className="text-3xl text-center text-white mt-5 font-normal">SignUp User</h1>
